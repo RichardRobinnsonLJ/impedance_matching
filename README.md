@@ -1,54 +1,93 @@
-# L-Matching Network Impedance Matching Calculator
+# Matching Network Design
 
-This Python script calculates the component values for an L-matching network to match a given load impedance to a source impedance. The L-matching network consists of either a series and parallel inductor or capacitor, designed to maximize power transfer between the source and load.
+This repository contains Python scripts for designing impedance matching networks, including **L-matching**, **T-matching**, and **Π-matching** networks. The tool supports both Low Pass Filter (LPF) and High Pass Filter (HPF) configurations for each topology.
 
-## Features
-- Calculates series and shunt component values (inductor or capacitor) for impedance matching.
-- Supports both high-to-low and low-to-high impedance matching scenarios.
-- Customizable input parameters for load and source impedance and frequency.
+## Files in the Repository
 
-## Formula Used
-The script uses standard L-network matching equations:
-- Quality factor (Q):
-  - If \( R_{load} > R_{source} \): \( Q = \sqrt{\frac{R_{load}}{R_{source}} - 1} \)
-  - If \( R_{load} < R_{source} \): \( Q = \sqrt{\frac{R_{source}}{R_{load}} - 1} \)
-- Series Reactance: \( X_{series} = R \times Q \)
-- Shunt Reactance: \( X_{shunt} = \frac{R}{Q} \)
-- Inductor: \( L = \frac{X}{2\pi f} \)
-- Capacitor: \( C = \frac{1}{2\pi f X} \)
+1. **`matching.py`**
+   - Main module to execute the program.
+   - Provides an interface to choose between LPF and HPF configurations.
+   - Supports three topologies: L-matching, T-matching, and Π-matching.
 
-## Usage
-1. Install Python (version 3.x recommended).
-2. Run the script using any Python IDE or from the command line:
+2. **`l_match.py`**
+   - Contains functions for designing L-matching networks for LPF (`lml`) and HPF (`lmh`).
+
+3. **`t_match.py`**
+   - Contains functions for designing T-matching networks for LPF (`tml`) and HPF (`tmh`).
+
+4. **`pi_match.py`**
+   - Contains functions for designing Π-matching networks for LPF (`pml`) and HPF (`pmh`).
+
+## How to Use
+
+1. Clone the repository and navigate to the directory.
    ```bash
-   python l_match_network.py
+   git clone https://github.com/RichardRobinnsonLJ/impedance_matching.git
+   cd <repository-directory>
    ```
-3. Customize the input parameters in the script:
-   ```python
-   R_load = 100  # Load resistance in ohms
-   X_load = 0    # Load reactance in ohms
-   R_source = 50 # Source resistance in ohms
-   freq = 1e6    # Frequency in Hz (1 MHz)
+
+2. Run the main module:
+   ```bash
+   python matching.py
    ```
-4. The script will output the calculated component values:
-   ```
-   Series Inductor (H): 7.071068e-06
-   Shunt Capacitor (F): 2.253934e-09
-   ```
+
+3. Follow the prompts to select the desired configuration:
+   - **Choose Filter Type:**
+     - `1` for Low Pass Filter (LPF).
+     - `2` for High Pass Filter (HPF).
+   - **Choose Topology:**
+     - `1` for L-Matching Network.
+     - `2` for Π-Matching Network.
+     - `3` for T-Matching Network.
+
+4. Enter the required parameters when prompted:
+   - **Source Resistance (Rs):** Resistance at the source side.
+   - **Load Resistance (Rl):** Resistance at the load side.
+   - **Frequency (Hz):** Operating frequency of the matching network.
+
+5. The program calculates and displays the component values (inductors and capacitors) and provides guidance on how to connect them.
 
 ## Example Output
-For matching a 100 Ω load to a 50 Ω source at 1 MHz:
+
+### Input:
 ```
-Series Inductor (H): 7.071068e-06
-Shunt Capacitor (F): 2.253934e-09
+Choose any one of the Following filter type
+1.LPF
+2.HPF
+Enter Your option: 1
+Choose one of the topology
+1.L_Matching Network
+2.Pi_Matching Network
+3.T_Matching Network
+Enter Your option: 2
+Enter the Source Resistance: 50
+Enter the Load Resistance: 200
+Enter the Frequency: 1000000
 ```
+
+### Output:
+```
+Connect Capacitor 1.5915494309189535e-10 F in parallel with source.
+Connect Inductor 2.5464790894703256e-05 H in series between source and load.
+Connect Capacitor 7.957747154594767e-11 F in parallel with load.
+```
+
+## Dependencies
+- Python 3.x
+- No additional libraries are required (uses only the standard math library).
+
+## Features
+- Supports L, T, and Π matching networks.
+- Handles both Low Pass and High Pass filter designs.
+- Dynamically calculates required inductance and capacitance values.
+
+## Notes
+- Ensure that the input values are realistic for your circuit application (e.g., resistance and frequency).
+- The program assumes ideal components; parasitic effects are not considered.
 
 ## License
-This project is open-source and free to use under the MIT License.
+This project is licensed under the MIT License.
 
-## Contributions
-Contributions, issues, and feature requests are welcome!
+---
 
-## Author
-Developed by Richard Robinnson L J
-
+Developed for designing advanced impedance matching networks for RF and other electronic circuit applications.
